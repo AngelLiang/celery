@@ -81,6 +81,8 @@ class StepFormatter(GraphFormatter):
 class Blueprint(object):
     """Blueprint containing bootsteps that can be applied to objects.
 
+    Blueprint包含了申请对象的启动步骤
+
     :keyword steps: List of steps.
     :keyword name: Set explicit name for this blueprint.
     :keyword app: Set the Celery app for this blueprint.
@@ -91,8 +93,8 @@ class Blueprint(object):
     """
     GraphFormatter = StepFormatter
 
-    name = None
-    state = None
+    name = None     # 名称
+    state = None    # 状态
     started = 0
     default_steps = set()
     state_to_name = {

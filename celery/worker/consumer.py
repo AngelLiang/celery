@@ -136,6 +136,7 @@ def dump_body(m, body):
 
 
 class Consumer(object):
+    '''消费者'''
     Strategies = dict
 
     #: set when consumer is shutting down.
@@ -382,6 +383,13 @@ class Consumer(object):
 
     def add_task_queue(self, queue, exchange=None, exchange_type=None,
                        routing_key=None, **options):
+        '''
+        添加任务队列
+        :param queue: 队列
+        :param exchange: 交换器
+        :param exchange_type: 交换器类型
+        :param routing_key: 路由键
+        '''
         cset = self.task_consumer
         queues = self.app.amqp.queues
         # Must use in' here, as __missing__ will automatically
@@ -441,6 +449,7 @@ class Consumer(object):
                                           app=self.app)
 
     def create_task_handler(self):
+        '''创建任务处理'''
         strategies = self.strategies
         on_unknown_message = self.on_unknown_message
         on_unknown_task = self.on_unknown_task
