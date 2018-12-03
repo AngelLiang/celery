@@ -66,6 +66,9 @@ __all__ = ['PENDING', 'RECEIVED', 'STARTED', 'SUCCESS', 'FAILURE',
 #: State precedence.
 #: None represents the precedence of an unknown state.
 #: Lower index means higher precedence.
+# 状态优先级
+# None代表未知状态的优先级
+# 低index意味着高优先级
 PRECEDENCE = ['SUCCESS',
               'FAILURE',
               None,
@@ -127,6 +130,8 @@ class state(str):
     def __le__(self, other):
         return precedence(self) >= precedence(other)
 
+##########
+# 任务状态
 #: Task state is unknown (assumed pending since you know the id).
 PENDING = 'PENDING'
 #: Task was received by a worker.
@@ -144,10 +149,15 @@ RETRY = 'RETRY'
 IGNORED = 'IGNORED'
 REJECTED = 'REJECTED'
 
+# 准备状态集合
 READY_STATES = frozenset([SUCCESS, FAILURE, REVOKED])
+# 非准备状态集合
 UNREADY_STATES = frozenset([PENDING, RECEIVED, STARTED, RETRY])
+# 异常状态集合
 EXCEPTION_STATES = frozenset([RETRY, FAILURE, REVOKED])
+# 传播状态集合
 PROPAGATE_STATES = frozenset([FAILURE, REVOKED])
 
+# 所有状态集合
 ALL_STATES = frozenset([PENDING, RECEIVED, STARTED,
                         SUCCESS, FAILURE, RETRY, REVOKED])
