@@ -365,7 +365,7 @@ class Step(object):
 
 
 class StartStopStep(Step):
-
+    """开始停止步骤"""
     #: Optional obj created by the :meth:`create` method.
     #: This is used by :class:`StartStopStep` to keep the
     #: original service object.
@@ -395,6 +395,7 @@ class StartStopStep(Step):
 
 
 class ConsumerStep(StartStopStep):
+    """消费者步骤"""
     requires = ('celery.worker.consumer:Connection', )
     consumers = None
 

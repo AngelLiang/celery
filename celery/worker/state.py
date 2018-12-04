@@ -155,6 +155,7 @@ class Persistent(object):
 
     It currently only stores revoked task id's.
 
+    数据持久化
     """
     storage = shelve
     protocol = pickle_protocol

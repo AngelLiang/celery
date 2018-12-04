@@ -136,7 +136,7 @@ def dump_body(m, body):
 
 
 class Consumer(object):
-    '''消费者'''
+    """消费者"""
     Strategies = dict
 
     #: set when consumer is shutting down.
@@ -383,13 +383,13 @@ class Consumer(object):
 
     def add_task_queue(self, queue, exchange=None, exchange_type=None,
                        routing_key=None, **options):
-        '''
+        """
         添加任务队列
         :param queue: 队列
         :param exchange: 交换器
         :param exchange_type: 交换器类型
         :param routing_key: 路由键
-        '''
+        """
         cset = self.task_consumer
         queues = self.app.amqp.queues
         # Must use in' here, as __missing__ will automatically
@@ -430,14 +430,17 @@ class Consumer(object):
                                      safe_repr(message.headers))
 
     def on_unknown_message(self, body, message):
+        """触发未知消息"""
         warn(UNKNOWN_FORMAT, self._message_report(body, message))
         message.reject_log_error(logger, self.connection_errors)
 
     def on_unknown_task(self, body, message, exc):
+        """触发未知任务"""
         error(UNKNOWN_TASK_ERROR, exc, dump_body(message, body), exc_info=True)
         message.reject_log_error(logger, self.connection_errors)
 
     def on_invalid_task(self, body, message, exc):
+        """触发无效任务"""
         error(INVALID_TASK_ERROR, exc, dump_body(message, body), exc_info=True)
         message.reject_log_error(logger, self.connection_errors)
 
@@ -449,7 +452,7 @@ class Consumer(object):
                                           app=self.app)
 
     def create_task_handler(self):
-        '''创建任务处理'''
+        """创建任务处理"""
         strategies = self.strategies
         on_unknown_message = self.on_unknown_message
         on_unknown_task = self.on_unknown_task
@@ -526,7 +529,7 @@ def _extract_proto2_embed(callbacks, errbacks, chain, chord, **_):
 
 
 class Connection(bootsteps.StartStopStep):
-
+    """连接"""
     def __init__(self, c, **kwargs):
         c.connection = None
 
@@ -549,6 +552,7 @@ class Connection(bootsteps.StartStopStep):
 
 
 class Events(bootsteps.StartStopStep):
+    """事件"""
     requires = (Connection, )
 
     def __init__(self, c, send_events=None, **kwargs):
@@ -588,6 +592,7 @@ class Events(bootsteps.StartStopStep):
 
 
 class Heart(bootsteps.StartStopStep):
+    """心跳"""
     requires = (Events, )
 
     def __init__(self, c, without_heartbeat=False, heartbeat_interval=None,
@@ -642,6 +647,7 @@ class Mingle(bootsteps.StartStopStep):
 
 
 class Tasks(bootsteps.StartStopStep):
+    """任务"""
     requires = (Mingle, )
 
     def __init__(self, c, **kwargs):
